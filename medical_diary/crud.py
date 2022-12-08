@@ -33,6 +33,25 @@ def get_prescription(db: Session, prescription_id: int):
         models.Prescription).filter(models.Prescription.id == prescription_id)
 
 
+def get_prescriptions_by_clinic_and_when(db: Session, clinic:int | None, date_string: str | None):
+    db_prescription = db.query(models.Prescription)
+
+    # filter by clinic(clinic_id)
+    if clinic is not None:
+        db_prescription = db_prescription.filter(models.Prescription.clinic_id == clinic)
+
+    # filter by date
+    if date_string is not None:
+        # TODO parse date(date string) properly
+        the_date = date(*list(map(int, date_string.split('-'))))
+
+        db_prescription = db_prescription.filter(
+            models.Prescription.prescription_date == the_date)  # Matching: 'date'
+
+    # return all the rows filtered by given conditions
+    return db_prescription.all()
+
+
 def create_prescription(db: Session, prescription: schemas.PrescriptionCreate):
     # create a SQLALchemy 'model' instance with given data
     db_prescription = models.Prescription(
@@ -74,7 +93,7 @@ def get_administration_record_by_when(db: Session, date_string: str, time_of_day
     the_date = date(*list(map(int, date_string.split('-'))))
 
     temp = db.query(models.Administration
-             # ).filter(models.Administration.prescription_id == prescription_id  # Matching: 'prescription_id'
+             # ).filter(models.Administration.prescription == prescription  # Matching: 'prescription'
              ).filter(cast(models.Administration.datetime, Date) == the_date)  # Matching: 'datetime'
 
     # print(date_string, temp, models.Administration.datetime)

@@ -63,26 +63,13 @@ class Prescription(PrescriptionBase):
 
 
 # region models for 'administration'
-# region (by tutorials) from the earlier version...
-"""class AdministrationOld(BaseModel):
-    prescription_id: int = Field(
-        default=None, description="The ID of prescription in \'prescription'\ table. A positive integer.", ge=1) # ...
-    datetime: str = ...
-    # about the regex... r"^\d{4}-?d{1,2}-?d{1,2}\s*T?\d{1,2}:?\d{1,2}$"
-    exact_time: bool = True
-    time_of_day: TimesOfDay = ...
-    pack_no: int | None  # ?
-    message: str | None = None
-    comment: str | None = None"""
-# endregion
-
-
 class AdministrationBase(BaseModel):
     prescription_id: int | None
+    # TODO prescription: int = Field(
+    #         default=None, description="The ID of prescription in \'prescription'\ table. A positive integer.", ge=1) # ...
     datetime: dt
+    # TODO about the regex... r"^\d{4}-?d{1,2}-?d{1,2}\s*T?\d{1,2}:?\d{1,2}$"
     exact_time: bool
-    # time_of_day: str | None  # TODO_DONE enum type
-    # administration_result: str | None  # TODO_DONE enum type
     time_of_day: TimesOfDay | None
     administration_result: AdministrationResults | None
     pack_no: int | None
@@ -96,9 +83,14 @@ class AdministrationCreate(AdministrationBase):
 
 class Administration(AdministrationBase):
     id: int
-    # db_timestamp: str | dt
     db_timestamp: dt
 
     class Config:
         orm_mode = True
+        schema_extra = {  # TODO what about 'id' and 'db_timestamp', which are allocated after DB transaction? (cont.)
+            # TODO (cont.) REFERENCE: https://fastapi.tiangolo.com/ko/tutorial/schema-extra-example/#pydantic-schema_extra
+            "administration_record": {
+                "": ""
+            }
+        }
 # endregion

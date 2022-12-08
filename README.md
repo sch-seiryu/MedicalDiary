@@ -12,15 +12,16 @@ Medical diary application based on Python 3.10+, FastAPI, SQLAlchemy, PostgreSQL
 
 ## Milestones
 What I've found is...
-* *FastAPI* is a micro/light-weight web framework like flask, and not to build a formal API nor for functional programming.
-  * With HTTP, 'CRUD' operations can be handled via HTTP requests.
-  * ASGI server is used for production.(*uvicorn* is the very example in tutorials)
+* *FastAPI* is a micro/light-weight web framework like *flask*, and not to build a formal API nor for functional programming.
+  * With **HTTP**, 'CRUD' operations can be handled via **HTTP requests**.
+  * **ASGI** server is used for production.(*uvicorn* is the very example in tutorials)
+    * ASGI: Asynchronous Server Gateway Interface (a spiritual successor to **WSGI**, and both of them are a kind of **CGI**, Common Gateway Interface)
   * Deeply based on *starlette*,
   * using *Pydantic* for validations of values
-  * and SQLAlchemy as an ORM,
-  * and OpenAPI is supported for (generating) documentations.
+  * and *SQLAlchemy* as an **ORM**,
+  * and **OpenAPI** is supported for (generating) documentations.
 * I adopted to use *FastAPI* framework to get access to my personal medical record DB, that I created earlier to practice the DBMS.
-* database/model/schema for FastAPI has been arranged from that of the tutorials to my DB, and building up APIs on the main/crud part.
+* database/model/schema for *FastAPI* has been arranged from that of the tutorials to my DB, and building up APIs on the main/crud part.
 * It is quite easy to use enumeration types, date&time and nested data types, not just simple values like numbers or string. 
 
 
