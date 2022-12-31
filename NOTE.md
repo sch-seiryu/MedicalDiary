@@ -1,12 +1,13 @@
 # Study Note
 
-## 2022-12-07, WED.
+## 2022-12-07, Wed.
 ### Today's contents:
 * Extra Models/Multiple Models, and so on.
   * https://fastapi.tiangolo.com/ko/tutorial/extra-models/
   * https://fastapi.tiangolo.com/ko/tutorial/response-status-code/#_1
   * https://fastapi.tiangolo.com/ko/tutorial/request-forms/
   * https://fastapi.tiangolo.com/ko/tutorial/request-files/
+  * https://fastapi.tiangolo.com/ko/tutorial/request-forms-and-files/
 * Testing
 
 ### Tips/Notes
@@ -28,3 +29,9 @@ This is useful if you don't know the valid field/attribute names (that would be 
 '*다수의 File 과 Form 매개변수를 한 경로 작동에 선언하는 것이 가능하지만, 요청의 본문이 application/json 가 아닌 multipart/form-data 로 인코딩 되기 때문에 JSON으로 받아야하는 Body 필드를 함께 선언할 수는 없습니다.
 이는 FastAPI의 한계가 아니라, HTTP 프로토콜에 의한 것입니다.*'
   * https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST
+
+
+## 2022-12-08, Thur.
+### Today's contents:
+* Handling Errors, and so on.
+  * https://fastapi.tiangolo.com/ko/tutorial/handling-errors/

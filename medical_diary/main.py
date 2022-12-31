@@ -1,4 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Request
+from fastapi.responses import JSONResponse
 # from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
@@ -6,6 +8,7 @@ from sqlalchemy.orm import Session
 # from .database import SessionLocal, engine
 import crud, models, schemas
 from database import SessionLocal, engine
+from exceptions import FormatInvalidateException
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -25,6 +28,22 @@ def get_db():
 @app.get("/")
 async def root():
     return {"message": "Hello World. This is medical diary test server."}
+
+
+# region [Practice]Install custom exception handlers [1]
+# [1]: https://fastapi.tiangolo.com/ko/tutorial/handling-errors/#install-custom-exception-handlers
+# region Custom Exception Handlers
+@app.exception_handler(FormatInvalidateException)
+async def form_invalidate_exception_handler(request: Request, exc: FormatInvalidateException):
+    return JSONResponse(
+        status_code=420,
+        content = {"message": "Invalidate format has been found.",
+                   "valid-format": exc.valid_form, "given-value": exc.given_value,
+                   "example": exc.format_example,  # Optional
+        }
+    )
+# endregion Custom Exception Handlers
+# endregion [Practice]Install custom exception handlers
 
 
 # region Administration Records
@@ -78,7 +97,12 @@ def read_administration_records_by_when(
     # print(db_record)
 
     if db_record is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Record not found.",
+                            # region [Practice]Add custom headers [1]
+                            # [1]: https://fastapi.tiangolo.com/ko/tutorial/handling-errors/#add-custom-headers
+                            headers={"X-Error":
+                                     "Proper date string format is \'YYYY-MM-DD\'."})
+                            # endregion [Practice]Add custom headers
     return db_record
 # endregion
 
